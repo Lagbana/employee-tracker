@@ -2,9 +2,11 @@
   "name": "employee-tracker",
   "version": "1.0.0",
   "description": "command line interface to manage an employees database",
-  "main": "index.js",
+  "main": "index",
+  "typings": "index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
   },
   "homepage": "https://github.com/Lagbana/employee-tracker#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "inquirer": "^7.1.0",
     "mysql2": "^2.1.0"
   }
