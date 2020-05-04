@@ -16,7 +16,7 @@ class Role {
         this.departmentID = options.departmentID
     }
     /*
-     *addDept method: 
+     *addRole method: 
         - executes create role query, with class @param: this.title, this.salary, and this.departmentID
     */
     async addRole() {
