@@ -72,6 +72,9 @@ class Employee {
         } catch (err) {
             console.log(err)
         } finally {
+            console.log(`
+            New employee added to the database: ${this.firstName} ${this.lastName} 
+        `)
             let db = await this.connection("human_Resources_DB")
             db.end()
         }
@@ -109,11 +112,31 @@ class Employee {
             db.end()
         }
     }
+    /*
+     *deleteEmployee method: 
+        - executes delete employee query, with class @param: this.firstName, this.lastName AND this.employee
+    */
+    async deleteEmployee() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let action = db.query(`DELETE FROM employees WHERE first_name = "${this.firstName}" AND last_name = "${this.lastName}" AND id = "${this.employeeID}";`)
+            await this.joinTable()
+        } catch (err) {
+            console.log(err)
+        } finally {
+            console.log(`
+            Deleted employee: " ${this.firstName} ${this.lastName} " from the database!
+        `)
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
 
 }
 
-const person = new Employee({managerID: 15, employeeID: 19 })
-person.updateEmployeeManager()
+
+const person = new Employee({ firstName: "Theodore", lastName: "Roosevelt", employeeID: 19 })
+person.deleteEmployee()
 
 
 
