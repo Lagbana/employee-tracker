@@ -71,8 +71,7 @@ class Role {
             for (let row of response) {
                 result.push(row.id)
             }
-            console.log(result)
-            // return result
+            return result
         } catch (err) {
             console.log(err)
         } finally {
@@ -98,7 +97,7 @@ class Role {
             }
             let mySet = new Set(temp)
             let result = Array.from(mySet)
-            console.log(result)
+            return result
 
         } catch (err) {
             console.log(err)
@@ -109,6 +108,4 @@ class Role {
     }
 }
 
-module.exports = Role;
-
-
+module.exports = Role
