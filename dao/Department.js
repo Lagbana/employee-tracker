@@ -7,9 +7,9 @@ const connection = require('./connectDB')
 */
 class Department {
     // Connection module is inherited by default
-    constructor(departmentName) {
+    constructor(options={}) {
         this.connection = connection
-        this.departmentName = departmentName
+        this.departmentName = options.departmentName
     }
     /*
      *addDept method: 
@@ -71,7 +71,7 @@ class Department {
         }
     }
     /*
-    *getdeptNames method: 
+     *getdeptNames method: 
         - executes SELECT query on the departments table
          *return = []
             # array of all department Names, to be used for user selection of department to delete
@@ -93,7 +93,25 @@ class Department {
             db.end()
         }
     }
+    /*
+     *getDeptBudget method: 
+        - executes SUM query on the salary column of joined_table
+         *return = Float
+            # budget for a queried department
+    */
+    async getDeptBudget() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let [[result]] = await db.query(`SELECT SUM(Salary) FROM joined_table WHERE Department = "${this.departmentName}";`)
+            let budget = result["SUM(Salary)"]
+            return budget
 
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
 }
-
 module.exports = Department
