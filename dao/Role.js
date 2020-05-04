@@ -67,11 +67,12 @@ class Role {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
-            let [response] = await db.query(`SELECT id FROM roles`)
+            let [response] = await db.query(`SELECT id FROM roles ORDER BY id ASC`)
             for (let row of response) {
                 result.push(row.id)
             }
-            return result
+            console.log(result)
+            // return result
         } catch (err) {
             console.log(err)
         } finally {
@@ -87,26 +88,27 @@ class Role {
             # array of all role Names, to be used for user selection of roles to delete
         - catches any errors, and ends the connection.
         */
-    //    async getRoleNames() {
-    //     try {
-    //         let result = []
-    //         let db = await this.connection("human_Resources_DB")
-    //         let [response] = await db.query(`SELECT department_name FROM role`)
-    //         for (let row of response) {
-    //             result.push(row.department_name)
-    //         }
-    //         return result
+       async getRoleNames() {
+        try {
+            let temp = []
+            let db = await this.connection("human_Resources_DB")
+            let [response] = await db.query(`SELECT title FROM roles ORDER BY title ASC;`)
+            for (let row of response) {
+                temp.push(row.title)
+            }
+            let mySet = new Set(temp)
+            let result = Array.from(mySet)
+            console.log(result)
 
-    //     } catch (err) {
-    //         console.log(err)
-    //     } finally {
-    //         const db = await this.connection("human_Resources_DB")
-    //         db.end()
-    //     }
-    // }
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
 }
 
-const test = new Role({ title: "Test Engineer", departmentID: 2 })
-test.deleteRole()
+
 
 
