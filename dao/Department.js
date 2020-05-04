@@ -55,6 +55,24 @@ class Department {
         }
     }
 
+    async deptIDArray () {
+        try {
+            let result = []
+            let db = await this.connection("human_Resources_DB")
+            let [response] = await db.query(`SELECT id FROM departments`)
+            for (let row of response) {
+                result.push(row.id)
+            }
+            console.log(result)
+
+        } catch(err) {
+            console.log(err)
+        } finally{
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
 
 }
-
+let test1 = new Department("Test1")
+test1.deptIDArray()
