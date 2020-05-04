@@ -23,12 +23,12 @@ class Role {
         try {
             const db = await this.connection("human_Resources_DB")
             const action = await db.query(`INSERT INTO roles (title, salary, department_ID) VALUES ("${this.title}", "${this.salary}", "${this.departmentID}");`)
-            console.log(`
-            New role added to the database: ${this.title}
-        `)
         } catch (err) {
             console.log(err)
         } finally {
+            console.log(`
+            New role added to the database: ${this.title}
+        `)
             const db = await this.connection("human_Resources_DB")
             db.end()
         }
@@ -41,12 +41,12 @@ class Role {
         try {
             let db = await this.connection("human_Resources_DB")
             let action = db.query(`DELETE FROM roles WHERE title = "${this.title}" AND department_ID = "${this.departmentID}";`)
-            console.log(`
-            Role: ${this.title} has been deleted from the database!
-        `)
         } catch (err) {
             console.log(err)
         } finally {
+            console.log(`
+            Role deleted from the database: ${this.title}
+        `)
             const db = await this.connection("human_Resources_DB")
             db.end()
         }
@@ -90,7 +90,6 @@ class Role {
             let mySet = new Set(temp)
             let result = Array.from(mySet)
             return result
-
         } catch (err) {
             console.log(err)
         } finally {
@@ -99,5 +98,4 @@ class Role {
         }
     }
 }
-
 module.exports = Role
