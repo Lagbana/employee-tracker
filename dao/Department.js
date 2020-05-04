@@ -12,10 +12,8 @@ class Department {
         this.departmentName = departmentName
     }
     /*
-     addDept method: 
-     - creates connection to database: "human_Resources_DB"
-     - executes create department query, with class @param: this.departmentName
-     - catches any errors, and ends the connection.
+     *addDept method: 
+        - executes create department query, with class @param: this.departmentName
     */
     async addDept() {
         try {
@@ -32,10 +30,8 @@ class Department {
         }
     }
     /*
-     deleteDept method: 
-    - creates connection to database: "human_Resources_DB"
-    - executes delete department query, with class @param: this.departmentName
-    - catches any errors, and ends the connection.
+     *deleteDept method: 
+        - executes delete department query, with class @param: this.departmentName
     */
     async deleteDept() {
         try {
@@ -52,18 +48,16 @@ class Department {
         }
     }
     /*
-     getdeptIds method: 
-    - creates connection to database: "human_Resources_DB"
-    - executes SELECT query on the departments table
-     *return = []
-        # array of all department IDs, to be used for create role validation in index.js
-    - catches any errors, and ends the connection.
+     *getdeptIds method: 
+        - executes SELECT query on the departments table by ordered IDS
+        *return = []
+            # array of all department IDs, to be used for create role validation in index.js
     */
     async getDeptIds() {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
-            let [response] = await db.query(`SELECT id FROM departments`)
+            let [response] = await db.query(`SELECT id FROM departments ORDER BY id ASC`)
             for (let row of response) {
                 result.push(row.id)
             }
@@ -77,12 +71,10 @@ class Department {
         }
     }
     /*
-    getdeptNames method: 
-    - creates connection to database: "human_Resources_DB"
-    - executes SELECT query on the departments table
-     *return = []
-        # array of all department Names, to be used for user selection of department to delete
-    - catches any errors, and ends the connection.
+    *getdeptNames method: 
+        - executes SELECT query on the departments table
+         *return = []
+            # array of all department Names, to be used for user selection of department to delete
     */
     async getDeptNames() {
         try {
