@@ -16,10 +16,8 @@ class Role {
         this.departmentID = options.departmentID
     }
     /*
-    addDept method: 
-    - creates connection to database: "human_Resources_DB"
-    - executes create department query, with class @param: this.departmentName
-    - catches any errors, and ends the connection.
+     *addDept method: 
+        - executes create role query, with class @param: this.title, this.salary, and this.departmentID
     */
     async addRole() {
         try {
@@ -36,10 +34,8 @@ class Role {
         }
     }
     /*
-    deleteRole method: 
-    - creates connection to database: "human_Resources_DB"
-    - executes delete role query, with class @param: this.title AND  this.departmentID
-    - catches any errors, and ends the connection.
+     *deleteRole method: 
+        - executes delete role query, with class @param: this.title AND  this.departmentID
     */
     async deleteRole() {
         try {
@@ -56,12 +52,10 @@ class Role {
         }
     }
     /*
-     getRolesIds method: 
-    - creates connection to database: "human_Resources_DB"
-    - executes SELECT query on the roles table
-     *return = []
-        # array of all roles IDs, to be used for create employee validation in index.js
-    - catches any errors, and ends the connection.
+     *getRolesIds method: 
+        - executes SELECT query on the roles table
+            *return = []
+            # array of all roles IDs, to be used for create employee validation in index.js
     */
     async getRolesIds() {
         try {
@@ -80,14 +74,12 @@ class Role {
         }
     }
     /*
-        getRoleNames method: 
-        - creates connection to database: "human_Resources_DB"
+    *getRoleNames method: 
         - executes SELECT query on the roles table
          *return = []
             # array of all role Names, to be used for user selection of roles to delete
-        - catches any errors, and ends the connection.
-        */
-       async getRoleNames() {
+    */
+    async getRoleNames() {
         try {
             let temp = []
             let db = await this.connection("human_Resources_DB")
