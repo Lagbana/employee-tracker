@@ -59,7 +59,7 @@ class Department {
         # array of all department IDs, to be used for create role validation in index.js
     - catches any errors, and ends the connection.
     */
-    async getdeptIds() {
+    async getDeptIds() {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
@@ -84,7 +84,7 @@ class Department {
         # array of all department Names, to be used for user selection of department to delete
     - catches any errors, and ends the connection.
     */
-    async getdeptNames() {
+    async getDeptNames() {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
@@ -92,8 +92,7 @@ class Department {
             for (let row of response) {
                 result.push(row.department_name)
             }
-            console.log(result)
-            // return result
+            return result
 
         } catch (err) {
             console.log(err)
