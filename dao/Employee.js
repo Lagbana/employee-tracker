@@ -18,6 +18,7 @@ class Employee {
         } else {
             this.managerID = options.managerID
         }
+        this.employeeID = options.employeeID
     }
     /*
      *joinTable method: 
@@ -76,14 +77,43 @@ class Employee {
         }
 
     }
+    /*
+     *updateEmployeeRole method: 
+        - executes update role query, with class @param: this.role, this.managerID, and this.employeeID
+    */
+    async updateEmployeeRole() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let action = db.query(`UPDATE employees SET role_ID = "${this.roleID}", manager_ID = ${this.managerID} WHERE id = ${this.employeeID};`)
+            await this.joinTable()
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
+    /*
+     *updateEmployeeManager method: 
+        - executes update manager query, with class @param: this.managerID and this.employeeID
+    */
+    async updateEmployeeManager() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let action = db.query(`UPDATE employees SET manager_ID = ${this.managerID} WHERE id = ${this.employeeID};`)
+            await this.joinTable()
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
 
-    // updateEmployee() {
-
-    // }
 }
 
-const person = new Employee({firstName: "Ola", lastName:"Franks", roleID: 16, managerID: 18 })
-person.addEmployee()
+const person = new Employee({managerID: 15, employeeID: 19 })
+person.updateEmployeeManager()
 
 
 
