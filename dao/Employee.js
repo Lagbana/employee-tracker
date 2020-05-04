@@ -131,12 +131,7 @@ class Employee {
             db.end()
         }
     }
-
 }
-
-
-const person = new Employee({ firstName: "Theodore", lastName: "Roosevelt", employeeID: 19 })
-person.deleteEmployee()
-
+module.exports = Employee
 
 
