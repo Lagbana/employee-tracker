@@ -3,7 +3,6 @@ const connection = require('./connectDB')
 
 /*
     Department Class allows the adding or deleting of a department
-
     *@param constructor (departmentName), where departmentName = String 
 */
 class Department {
@@ -12,7 +11,6 @@ class Department {
         this.connection = connection
         this.departmentName = departmentName
     }
-
     /*
      addDept method: 
      - creates connection to database: "human_Resources_DB"
@@ -33,13 +31,12 @@ class Department {
             db.end()
         }
     }
-
     /*
      addDept method: 
     - creates connection to database: "human_Resources_DB"
     - executes delete department query, with class @param: this.departmentName
     - catches any errors, and ends the connection.
-*/
+    */
     async deleteDept() {
         try {
             let db = await this.connection("human_Resources_DB")
@@ -54,8 +51,14 @@ class Department {
             db.end()
         }
     }
-
-    async deptIDArray () {
+    /*
+     deptIDArray method: 
+    - creates connection to database: "human_Resources_DB"
+    - executes SELECT query on the departments table
+     *returns an array of all department IDs, to be used for create role validation in index.js
+    - catches any errors, and ends the connection.
+    */
+    async deptIDArray() {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
@@ -63,16 +66,14 @@ class Department {
             for (let row of response) {
                 result.push(row.id)
             }
-            console.log(result)
+            return result
 
-        } catch(err) {
+        } catch (err) {
             console.log(err)
-        } finally{
+        } finally {
             const db = await this.connection("human_Resources_DB")
             db.end()
         }
     }
 
 }
-let test1 = new Department("Test1")
-test1.deptIDArray()
