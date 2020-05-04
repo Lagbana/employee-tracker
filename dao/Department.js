@@ -2,7 +2,7 @@
 const connection = require('./connectDB')
 
 /*
-    Department Class allows the adding or deleting of a department
+    Department Class allows the adding and deleting of a department, as well as retrieval of department ids
     *@param constructor (departmentName), where departmentName = String 
 */
 class Department {
@@ -52,13 +52,14 @@ class Department {
         }
     }
     /*
-     deptIDArray method: 
+     getdeptIds method: 
     - creates connection to database: "human_Resources_DB"
     - executes SELECT query on the departments table
-     *returns an array of all department IDs, to be used for create role validation in index.js
+     *return = []
+        # array of all department IDs, to be used for create role validation in index.js
     - catches any errors, and ends the connection.
     */
-    async deptIDArray() {
+    async getdeptIds() {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
@@ -67,6 +68,32 @@ class Department {
                 result.push(row.id)
             }
             return result
+
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
+    /*
+    getdeptNames method: 
+    - creates connection to database: "human_Resources_DB"
+    - executes SELECT query on the departments table
+     *return = []
+        # array of all department Names, to be used for user selection of department to delete
+    - catches any errors, and ends the connection.
+    */
+    async getdeptNames() {
+        try {
+            let result = []
+            let db = await this.connection("human_Resources_DB")
+            let [response] = await db.query(`SELECT department_name FROM departments`)
+            for (let row of response) {
+                result.push(row.department_name)
+            }
+            console.log(result)
+            // return result
 
         } catch (err) {
             console.log(err)
