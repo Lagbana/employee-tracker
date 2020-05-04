@@ -80,7 +80,7 @@ class Department {
         try {
             let result = []
             let db = await this.connection("human_Resources_DB")
-            let [response] = await db.query(`SELECT department_name FROM departments`)
+            let [response] = await db.query(`SELECT department_name FROM departments ORDER BY department_name ASC`)
             for (let row of response) {
                 result.push(row.department_name)
             }
