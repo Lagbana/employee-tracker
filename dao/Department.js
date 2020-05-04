@@ -32,7 +32,7 @@ class Department {
         }
     }
     /*
-     addDept method: 
+     deleteDept method: 
     - creates connection to database: "human_Resources_DB"
     - executes delete department query, with class @param: this.departmentName
     - catches any errors, and ends the connection.
@@ -103,3 +103,5 @@ class Department {
     }
 
 }
+
+module.exports = Department
