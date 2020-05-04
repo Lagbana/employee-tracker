@@ -1,9 +1,8 @@
-/* Schema for SQL database/table. We haven't discussed this type of file yet */
-DROP DATABASE IF EXISTS humanResourcesDB;
+-- Create database --
+DROP DATABASE IF EXISTS  human_Resources_DB;
+CREATE DATABASE human_Resources_DB;
 
-/* Create database */
-CREATE DATABASE humanResourcesDB;
-USE humanResourcesDB;
+USE human_Resources_DB;
 
 /* Create new table with a primary key that auto-increments, and a text field */
 CREATE TABLE departments (
@@ -18,8 +17,7 @@ CREATE TABLE roles (
   salary DECIMAL(10, 2) NOT NULL,
   department_ID INTEGER NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT FK_RolesDepartment FOREIGN KEY (department_ID) 
-  REFERENCES departments(id) 
+  FOREIGN KEY (department_ID) REFERENCES departments(id) 
 );
 
 CREATE TABLE employees (
@@ -29,8 +27,32 @@ CREATE TABLE employees (
   role_ID INTEGER NOT NULL,
   manager_ID INTEGER NULL,
   PRIMARY KEY (id),
-  CONSTRAINT FK_EmployeeRole FOREIGN KEY (role_ID) 
-  REFERENCES roles(id),
-  CONSTRAINT FK_EmployeeManager FOREIGN KEY (manager_ID) 
-  REFERENCES employees(id)
+  FOREIGN KEY (role_ID) REFERENCES roles(id),
+  FOREIGN KEY (manager_ID) REFERENCES employees(id)
 );
+
+-- Create / Update Table Logic  --
+-- ! Only run this query after creating the other tables
+
+DROP TABLE IF EXISTS joined_table;
+
+CREATE TABLE joined_table 
+SELECT employees.id AS ID, employees.first_name AS First_Name, employees.last_name AS Last_Name, 
+employees.manager_ID AS Manager_ID, roles.title AS Title, roles.salary AS Salary, departments.department_name AS Department
+FROM ((departments
+LEFT JOIN roles ON departments.id = roles.department_ID)
+LEFT JOIN employees ON roles.id = employees.role_ID )
+WHERE employees.id IS NOT NULL AND roles.title IS NOT NULL AND departments.department_name IS NOT NULL
+ORDER BY ID ASC;
+
+ALTER TABLE joined_table 
+ADD Manager VARCHAR (30) NULL;
+
+
+UPDATE joined_table, 
+(
+    SELECT ID, First_Name, Last_Name
+    FROM joined_table 
+    WHERE title = "Manager"
+) as temp
+SET Manager = CONCAT(temp.First_Name, " ", temp.Last_Name) WHERE joined_table.Manager_ID = temp.ID AND Manager_ID is not NULL;
