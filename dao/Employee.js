@@ -1,5 +1,6 @@
 // Import database connection dependency
 const connection = require('./connectDB')
+const cTable = require('console.table')
 
 /*
 Employee Class allows the adding and deleting of employee roles, remaking of the joined employees table, and other methods
@@ -20,6 +21,7 @@ class Employee {
         }
         this.managerName = options.managerName
         this.employeeID = options.employeeID
+        this.department = options.department
     }
     /*
      *joinTable method: 
@@ -178,42 +180,84 @@ class Employee {
      *return = { [], [], [] }
         # an object of arrays containing full names, first names, last names
     */
-   async getEmployeeNames() {
-    try {
-        let names = [], firstNames = [], lastNames = []
-        let db = await this.connection("human_Resources_DB")
-        let [response] = await db.query(`SELECT CONCAT(first_name, " ", last_name) AS name, first_name, last_name FROM employees;`)
-        for (let row of response) {
-            names.push(row.name)
-            firstNames.push(row.first_name)
-            lastNames.push(row.last_name)
+    async getEmployeeNames() {
+        try {
+            let names = [], firstNames = [], lastNames = []
+            let db = await this.connection("human_Resources_DB")
+            let [response] = await db.query(`SELECT CONCAT(first_name, " ", last_name) AS name, first_name, last_name FROM employees;`)
+            for (let row of response) {
+                names.push(row.name)
+                firstNames.push(row.first_name)
+                lastNames.push(row.last_name)
+            }
+            let results = { names: names, firstNames: firstNames, lastNames: lastNames }
+            return results
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
         }
-        let results = {names: names, firstNames: firstNames, lastNames: lastNames}
-        return results
-    } catch (err) {
-        console.log(err)
-    } finally {
-        const db = await this.connection("human_Resources_DB")
-        db.end()
     }
-}
     /*
     *getEmployeeID method: 
     - executes SELECT query on the employees table
      *return = Integer, employee ID
     */
-   async getEmployeeID() {
-    try {
-        let db = await this.connection("human_Resources_DB")
-        let [[response]] = await db.query(`SELECT id from employees WHERE first_name = "${this.firstName}" AND last_name = "${this.lastName}";`)
-        return response.id
-    } catch (err) {
-        console.log(err)
-    } finally {
-        const db = await this.connection("human_Resources_DB")
-        db.end()
+    async getEmployeeID() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let [[response]] = await db.query(`SELECT id from employees WHERE first_name = "${this.firstName}" AND last_name = "${this.lastName}";`)
+            return response.id
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
     }
-}
+    /*
+    *getManagerEmployees method: 
+    - prints table of employees queried by manager
+    */ 
+    async getManagerEmployees() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let [employees] = await db.query(`SELECT * FROM joined_table WHERE Manager = "${this.managerName}" ORDER BY ID ASC;`)
+            const table = await cTable.getTable(employees)
+        return(`
+    
+${table}
+    
+                `)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
+    /*
+    *getDepartmentEmployees method: 
+    - prints table of employees queried by department
+    */ 
+    async getDepartmentEmployees() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let [employees] = await db.query(`SELECT * FROM joined_table WHERE Department = "${this.department}" ORDER BY ID ASC;`)
+            const table = await cTable.getTable(employees)
+        return  (`
+    
+${table}
+    
+                `)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
 }
 module.exports = Employee
 
