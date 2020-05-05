@@ -19,16 +19,16 @@ VALUES ("Sales");
 
 -- Create Roles --
 INSERT INTO roles (title, salary, department_ID)
-VALUES ("Manager", 100000, 1);
+VALUES ("HR Manager", 100000, 1);
 
 INSERT INTO roles (title, salary, department_ID)
-VALUES ("Manager", 150000, 2);
+VALUES ("Engineering Manager", 150000, 2);
 
 INSERT INTO roles (title, salary, department_ID)
-VALUES ("Manager", 140000, 3);
+VALUES ("Finance Manager", 140000, 3);
 
 INSERT INTO roles (title, salary, department_ID)
-VALUES ("Manager", 150000, 4);
+VALUES ("Marketing Manager", 150000, 4);
 
 INSERT INTO roles (title, salary, department_ID)
 VALUES ("Front End Developer", 80000, 2);
@@ -61,7 +61,7 @@ INSERT INTO roles (title, salary, department_ID)
 VALUES ("Performance Analyst", 60000, 1);
 
 INSERT INTO roles (title, salary, department_ID)
-VALUES ("Manager", 150000, 5);
+VALUES ("Sales Manager", 150000, 5);
 
 INSERT INTO roles (title, salary, department_ID)
 VALUES ("Sales Representative", 80000, 5);
@@ -137,3 +137,8 @@ ORDER BY Title ASC;
 -- View All by Manager --
 SELECT * FROM joined_table
 ORDER BY Manager ASC;
+
+-- Get department budget --
+SELECT SUM(Salary) 
+FROM joined_table
+WHERE Department = "Sales";
