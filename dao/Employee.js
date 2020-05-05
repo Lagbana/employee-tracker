@@ -2,7 +2,7 @@
 const connection = require('./connectDB')
 
 /*
-Employee Class allows the adding and deleting of employee roles, and the remaking of the joined employees table
+Employee Class allows the adding and deleting of employee roles, remaking of the joined employees table, and other methods
 
 *@param constructor (options), where options = {} 
 *@param option properties: firstName = String, lastName = String, roleID = Integer, managerID = Integer
@@ -25,7 +25,6 @@ class Employee {
      *joinTable method: 
         - updates join_table after employee table has been modified
     */
-
     async joinTable() {
         try {
             let db = await this.connection("human_Resources_DB")
@@ -140,6 +139,9 @@ class Employee {
         try {
             let db = await this.connection("human_Resources_DB")
             let [[action]] = await db.query(`SELECT DISTINCT Manager_ID FROM joined_table WHERE Manager = "${this.managerName}";`)
+
+            if (action === undefined) throw `No manager assigned to employee`
+
             return action.Manager_ID
         } catch (err) {
             console.log(err)
@@ -170,7 +172,6 @@ class Employee {
             db.end()
         }
     }
-    // select first_name, last_name from employees where id = 5;
     /*
     *getEmployeeNames method: 
     - executes SELECT query on the joined table
