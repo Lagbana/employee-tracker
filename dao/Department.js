@@ -7,7 +7,7 @@ const connection = require('./connectDB')
 */
 class Department {
     // Connection module is inherited by default
-    constructor(options={}) {
+    constructor(options = {}) {
         this.connection = connection
         this.departmentName = options.departmentName
     }
@@ -85,7 +85,6 @@ class Department {
                 result.push(row.department_name)
             }
             return result
-
         } catch (err) {
             console.log(err)
         } finally {
@@ -106,6 +105,24 @@ class Department {
             let budget = result["SUM(Salary)"]
             return budget
 
+        } catch (err) {
+            console.log(err)
+        } finally {
+            const db = await this.connection("human_Resources_DB")
+            db.end()
+        }
+    }
+    /*
+     *getDepartmentID method: 
+        - executes SELECT query on the departments table
+         *return = Integer
+            # The department ID corresponding to the queried department name
+    */
+    async getDepartmentID() {
+        try {
+            let db = await this.connection("human_Resources_DB")
+            let [[response]] = await db.query(`SELECT id FROM departments WHERE department_name = "${this.departmentName}";`)
+            return response.id
         } catch (err) {
             console.log(err)
         } finally {
