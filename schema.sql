@@ -4,7 +4,7 @@ CREATE DATABASE human_Resources_DB;
 
 USE human_Resources_DB;
 
-/* Create new table with a primary key that auto-increments, and a text field */
+-- Create 3 main tables --
 CREATE TABLE departments (
   id INTEGER AUTO_INCREMENT NOT NULL ,
   department_name VARCHAR(30) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE roles (
   salary DECIMAL(10, 2) NOT NULL,
   department_ID INTEGER NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (department_ID) REFERENCES departments(id) 
+  FOREIGN KEY (department_ID) REFERENCES departments(id) ON DELETE CASCADE
 );
 
 CREATE TABLE employees (
@@ -27,12 +27,13 @@ CREATE TABLE employees (
   role_ID INTEGER NOT NULL,
   manager_ID INTEGER NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (role_ID) REFERENCES roles(id),
-  FOREIGN KEY (manager_ID) REFERENCES employees(id)
+  FOREIGN KEY (role_ID) REFERENCES roles(id) ON DELETE CASCADE,
+  FOREIGN KEY (manager_ID) REFERENCES employees(id) ON DELETE CASCADE
 );
 
 -- Create / Update Table Logic  --
 -- ! Only run this query after creating the other tables
+-- Join Tables --
 
 DROP TABLE IF EXISTS joined_table;
 
@@ -53,6 +54,6 @@ UPDATE joined_table,
 (
     SELECT ID, First_Name, Last_Name
     FROM joined_table 
-    WHERE title = "Manager"
+    WHERE title LIKE '%Manager'
 ) as temp
 SET Manager = CONCAT(temp.First_Name, " ", temp.Last_Name) WHERE joined_table.Manager_ID = temp.ID AND Manager_ID is not NULL;
