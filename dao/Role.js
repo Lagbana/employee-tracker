@@ -81,15 +81,13 @@ class Role {
     */
     async getRoleNames() {
         try {
-            let temp = []
+            let results = []
             let db = await this.connection("human_Resources_DB")
-            let [response] = await db.query(`SELECT title FROM roles ORDER BY title ASC;`)
+            let [response] = await db.query(`SELECT DISTINCT title FROM roles ORDER BY title ASC;`)
             for (let row of response) {
-                temp.push(row.title)
+                results.push(row.title)
             }
-            let mySet = new Set(temp)
-            let result = Array.from(mySet)
-            return result
+            return results
         } catch (err) {
             console.log(err)
         } finally {
@@ -97,5 +95,23 @@ class Role {
             db.end()
         }
     }
+    /*
+     *getRoleID method: 
+        - executes SELECT query on the roles table
+         *return = Integer
+            # The role ID corresponding to the queried role name
+    */
+   async getRoleID() {
+    try {
+        let db = await this.connection("human_Resources_DB")
+        let [[response]] = await db.query(`SELECT id FROM roles WHERE title = "${this.title}";`)
+        return response.id
+    } catch (err) {
+        console.log(err)
+    } finally {
+        const db = await this.connection("human_Resources_DB")
+        db.end()
+    }
+}
 }
 module.exports = Role
