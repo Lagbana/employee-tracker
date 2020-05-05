@@ -19,7 +19,54 @@ async function viewData(tableName, property) {
     const result = await viewDB(tableName, property)
     console.log(result)
 }
+//  *Function => displays employees by queried manager
+async function viewByManager(){
+        // Get list of all managers
+        let managerList = await getEmployee.getManagerNames()
 
+            let question = [
+            {
+                type: 'list',
+                message: 'View employees by manager',
+                name: 'manager',
+                choices: managerList
+            }
+        ]
+        try {
+            const response = await inquirer.prompt(question)
+
+            // Get employees table using Employee class method: getManagerEmployees and manager choice
+            let employees = new Employee({ managerName: response.manager})
+            let table = await employees.getManagerEmployees()
+            console.log(table)
+        } catch (err) {
+            console.log(err)
+        }
+}
+//  *Function => displays employees by queried manager
+async function viewByDepartment(){
+        // Get list of all departments
+        let departmentList = await getDepartment.getDeptNames()
+
+            let question = [
+            {
+                type: 'list',
+                message: 'View employees by department',
+                name: 'department',
+                choices: departmentList
+            }
+        ]
+        try {
+            const response = await inquirer.prompt(question)
+
+            // Get employees table using Employee class method: getDepartmentEmployees and department choice
+            let employees = new Employee({ department: response.department})
+            let table = await employees.getDepartmentEmployees()
+            console.log(table)
+        } catch (err) {
+            console.log(err)
+        }
+}
 //  *Function => adds department to the database departments table
 async function createDepartment() {
     let question = [
@@ -326,7 +373,7 @@ let mainMenu = [
         type: 'list',
         message: 'what do you want to do?',
         name: 'action',
-        choices: ["Exit", "View all employees", "View all employees by manager", "View all departments", "View all roles", "Add Department", "Add Role",
+        choices: ["Exit", "View all employees", "View all departments", "View all roles", "View employees by department", "View employees by manager", "Add Department", "Add Role",
             "Add employee", "Update employee role", "Update employee manager", "Remove Department", "Remove Role", "Remove employee", "Department budget"]
     }
 ]
@@ -339,9 +386,10 @@ async function start() {
 const userChoices = {
     "Exit": () => process.exit(),
     "View all employees": () => viewData('joined_table', 'ID'),
-    "View all employees by manager": () => viewData('joined_table', 'Manager'),
     "View all departments": () => viewData('departments', 'id'),
     "View all roles": () => viewData('roles', 'id'),
+    "View employees by department": () => viewByDepartment(),
+    "View employees by manager": () => viewByManager(),
     "Add Department": () => createDepartment(),
     "Add Role": () => createRole(),
     "Add employee": () => createEmployee(),
@@ -350,7 +398,7 @@ const userChoices = {
     "Remove Department": () => removeDepartment(),
     "Remove Role": () => removeRole(),
     "Remove employee": () => removeEmployee(),
-    "Department budget": () => departmentBudget()
+    "Get department budget": () => departmentBudget()
 }
 // Application executing function
 async function app() {
