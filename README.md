@@ -22,7 +22,9 @@ The application relies on Node.js, inquirer npm module, and MySQL database.
 
 ## Usage
 #### Watch the video below to see the application in action
-[![](/resources/mockvideo.png)](https://www.screencast.com/t/8a6bym8G)
+<a href="https://www.screencast.com/t/8a6bym8G"
+target="_blank"><img src="https://github.com/Lagbana/employee-tracker/blob/master/resources/mockvideo.PNG?raw=true" 
+alt="VIDEO" width="375" height="200" border="10" /></a>
 
 
 ## License
