@@ -16,13 +16,14 @@ The application relies on Node.js, inquirer npm module, and MySQL database.
 
 ## Installation
   
- 1. Install `Node.js`
- 2. Run `npm install` to install the dependencies (see package.json)
- 3. Invoke by running `npm start` 
+> 1. Install `Node.js`
+> 2. Run `npm install` in the terminal to install the dependencies (see package.json)
+> 3. Invoke application by running `npm start` 
 
 ## Usage
-Examples coming soon... 
+#### Watch the video below to see the application in action
+[![app-use](./resources/mockvideo.png)](https://www.screencast.com/t/8a6bym8G)
 
 
 ## License
-Licensed under the [MIT](https://choosealicense.com/licenses/mit/) license.
+[MIT](https://choosealicense.com/licenses/mit/) license.
