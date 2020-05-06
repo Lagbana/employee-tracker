@@ -374,7 +374,7 @@ let mainMenu = [
         message: 'what do you want to do?',
         name: 'action',
         choices: ["Exit", "View all employees", "View all departments", "View all roles", "View employees by department", "View employees by manager", "Add Department", "Add Role",
-            "Add employee", "Update employee role", "Update employee manager", "Remove Department", "Remove Role", "Remove employee", "Department budget"]
+            "Add employee", "Update employee role", "Update employee manager", "Remove Department", "Remove Role", "Remove employee", "Get department budget"]
     }
 ]
 // *Function => executes the main menu
