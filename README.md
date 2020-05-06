@@ -22,7 +22,7 @@ The application relies on Node.js, inquirer npm module, and MySQL database.
 
 ## Usage
 #### Watch the video below to see the application in action
-[![app-use](./resources/mockvideo.png)](https://www.screencast.com/t/8a6bym8G)
+[![app-use](/resources/mockvideo.png)](https://www.screencast.com/t/8a6bym8G)
 
 
 ## License
