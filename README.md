@@ -28,4 +28,4 @@ alt="VIDEO" width="375" height="200" border="10" /></a>
 
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/) license.
+[MIT](https://choosealicense.com/licenses/mit/) license &copy; 2020 Larry Agbana.
