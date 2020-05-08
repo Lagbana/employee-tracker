@@ -1,5 +1,5 @@
 /* Seeds for SQL table. We haven't discussed this type of file yet */
-USE human_resourcesDB;
+USE human_Resources_DB;
 
 -- Create Departments --
 INSERT INTO departments (department_name)
